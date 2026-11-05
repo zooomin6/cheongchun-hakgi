@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>청춘학기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:Pretendard,system-ui,sans-serif;background:#e9edf3;color:#1b1f27;line-height:1.5}
+a{color:inherit;text-decoration:none}
+button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
+.app{max-width:430px;margin:0 auto;background:#f5f7fa;min-height:100vh;position:relative}
+section[data-page]{display:none;padding-bottom:6rem}
+section[data-page].on{display:block}
+.top{position:sticky;top:0;z-index:5;background:#fff;display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid #eef0f4}
+.top h1{font-size:1.1rem;flex:1}
+.logo{flex:1}.logo img{height:2.4rem;display:block}
+.fs{display:flex;gap:.2rem;background:#eef3fb;border-radius:.6rem;padding:.3rem .5rem;font-size:.8rem;color:#555}
+.fs button{padding:0 .3rem}
+.call{width:2.6rem;height:2.6rem;border-radius:50%;background:#2f7cf6;color:#fff;display:grid;place-items:center;font-size:1.1rem}
+.pad{padding:1rem}
+.card{background:#fff;border-radius:1rem;padding:1.1rem;margin:0 1rem 1rem;box-shadow:0 1px 3px #0000000d}
+.btn{display:flex;align-items:center;justify-content:center;gap:.4rem;background:#2f7cf6;color:#fff;border-radius:.8rem;padding:.8rem 1rem;font-weight:700}
+.btn.sm{padding:.5rem .9rem;font-size:.9rem;display:inline-flex}
+.btn.ghost{background:#fff;color:#1b1f27;border:1px solid #dfe3ea}
+.btn.yellow{background:#fde047;color:#1b1f27}
+.tag{display:inline-block;font-size:.75rem;padding:.2rem .55rem;border-radius:.4rem;background:#e8f0fe;color:#2f7cf6;font-weight:600}
+.tag.org{background:#fff1e6;color:#f97316}
+.tag.red{background:#fee2e2;color:#ef4444}
+.muted{color:#7a828f;font-size:.85rem}
+.blue{color:#2f7cf6}
+.price{font-size:1.5rem;font-weight:800}
+h2{font-size:1.15rem;margin-bottom:.5rem}
+h3{font-size:1.05rem}
+.row{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;padding:0 1rem 1rem}
+.chips span{background:#fff;border:1px solid #e3e6ec;border-radius:.6rem;padding:.5rem .8rem;font-size:.85rem}
+.chips span.on{background:#2f7cf6;color:#fff;border-color:#2f7cf6}
+.img{background-size:cover;background-position:center;aspect-ratio:684/368;border-radius:1rem 1rem 0 0;display:flex;align-items:flex-end;justify-content:space-between;padding:.8rem;font-size:4rem;position:relative}
+.img .loc{position:absolute;right:.8rem;bottom:.8rem;background:#0008;color:#fff;font-size:.8rem;padding:.3rem .6rem;border-radius:1rem}
+.img .badges{position:absolute;left:.8rem;top:.8rem;display:flex;gap:.3rem}
+.img .badges span{font-size:.75rem;color:#fff;background:#f97316;padding:.2rem .5rem;border-radius:.3rem}
+.img .badges span+span{background:#2f7cf6}
+.course{padding:0;overflow:hidden}
+.course .body{padding:1.1rem}
+.note{background:#eef4ff;border-radius:.7rem;padding:.7rem .9rem;font-size:.85rem;color:#2f6bd8;margin:.7rem 0}
+.li{display:flex;gap:.5rem;font-size:.9rem;margin:.3rem 0}
+.promise{display:flex;gap:.8rem;margin:1rem 0}
+.promise .ic{width:2.6rem;height:2.6rem;flex:none;border-radius:.7rem;background:#2f7cf6;color:#fff;display:grid;place-items:center}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #eee;display:flex;z-index:9}
+.nav a{flex:1;text-align:center;padding:.6rem 0;font-size:.75rem;color:#888}
+.nav a b{display:block;font-size:1.3rem}
+.nav a.on{color:#2f7cf6}
+.fixbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #eee;display:flex;gap:.6rem;padding:.7rem 1rem;z-index:9}
+.fixbar .btn{flex:1}
+.step{border:1px solid #dfe3ea;border-radius:.8rem;padding:1rem;margin:.7rem 0}
+.step.main{border-color:#2f7cf6;background:#f5f9ff}
+input[type=text]{width:100%;padding:.9rem;border:1px solid #d7dbe2;border-radius:.7rem;font:inherit;background:#fafbfc}
+label.opt{display:flex;gap:.7rem;align-items:center;border:1px solid #dfe3ea;border-radius:.9rem;padding:1rem;margin:.6rem 0;background:#fff}
+label.opt:has(input:checked){border-color:#2f7cf6;background:#f5f9ff}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:0 1rem 1rem}
+.who label{background:#fff;border:1px solid #dfe3ea;border-radius:1rem;padding:1rem;text-align:center;font-size:.9rem}
+.who label:has(input:checked){border:2px solid #2f7cf6}
+.who input{display:none}
+.bar{height:.5rem;background:#e6e9ef;border-radius:1rem;overflow:hidden;margin:.5rem 0}
+.bar i{display:block;height:100%;background:#2f7cf6}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:.3rem;font-size:.9rem}
+.cal span{padding:.4rem 0;border-radius:.5rem}
+.cal .h{font-weight:700}
+.cal .x{color:#ccc}
+.cal .c{background:#e8f0fe;color:#2f7cf6;font-weight:700}
+.cal .t{background:#2f7cf6;color:#fff}
+.sun{color:#ef4444}
+.album{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.8rem;text-align:center;font-size:.75rem}
+.album div div{height:5.5rem;border-radius:.6rem;display:grid;place-items:center;font-size:2rem;margin-bottom:.3rem}
+.g1{background:linear-gradient(135deg,#f6c27a,#b45309)}
+.g2{background:linear-gradient(135deg,#a7f3d0,#92400e)}
+.g3{background:linear-gradient(135deg,#bae6fd,#0369a1)}
+.g4{background:linear-gradient(135deg,#fecaca,#7c2d12)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ========== 1. 홈 ========== -->
+<section data-page="home">
+  <div class="top">
+    <a class="logo" href="#home"><img src="img/logo.png" alt="청춘학기"></a>
+    <div class="fs"><button data-fs="-1">가-</button><span class="fsv">100%</span><button data-fs="1">가+</button></div>
+    <a class="btn sm" href="tel:15887720">📞 상담센터</a>
+  </div>
+  <div class="card row" style="margin-top:1rem">
+    <span>🔊 <b>큰 글씨와 전화 상담으로<br>가장 쉽게 신청하세요</b></span>
+    <button class="btn sm ghost blue">음성안내 ▶</button>
+  </div>
+  <div class="pad">
+    <p class="muted"><span class="tag">2024 가을 정규학기</span> 회원 4년차</p>
+    <h2 style="font-size:1.4rem;margin-top:.4rem">김영숙 님, 주 2회 배움과<br>낭만 여행을 골라보세요!</h2>
+  </div>
+  <div class="card row">
+    <span>📞 <span class="muted">결제나 회원가입이 어려우신가요?</span><br><b>전화 상담·신청 : 1588-7720</b></span>
+    <a class="btn sm" href="tel:15887720">바로연결</a>
+  </div>
+  <div class="pad">
+    <b>🔍 원하시는 강좌나 탐방지를 검색해보세요</b>
+    <div class="row" style="margin-top:.5rem"><input type="text" placeholder="후쿠오카 일본어, 우쿨렐레, 남해 스케치..."><button class="btn sm" style="white-space:nowrap">검색</button></div>
+  </div>
+  <div class="chips">
+    <span class="on">전체 학기</span><span>✈️ 어학 & 해외탐방</span><span>🎸 악기 & 공연무대</span><span>🎨 어반스케치 & 힐링</span><span>📱 스마트폰 & 라이프</span>
+  </div>
+  <div class="pad" style="padding-top:0">
+    <span class="tag org">모집중</span>
+    <div class="row"><h2 style="margin:.3rem 0 0">인기 정규 8주 학기</h2><a class="muted blue" href="#detail">전체보기 ›</a></div>
+    <p class="muted">화·목 주 2회 집중 수업 후 설레는 실전 무대/ 여행까지</p>
+  </div>
+
+  <div class="card course">
+    <div class="img" style="background-image:url(img/course1.png)"><div class="badges"><span>선착순 마감 D-7</span><span>정원 12명 중 9명 신청</span></div><span class="loc">📍 강남 캠퍼스</span></div>
+    <div class="body">
+      <p class="muted">어학 & 해외탐방 · 화목 주 2회 / 총 16회 수업</p>
+      <h3 style="margin:.4rem 0">기초 일본어 8주 (주 2회) 과정<br>& 후쿠오카 미식 탐방</h3>
+      <div class="li">📅 화·목 오전 10:30~12:00 (주 2회, 8주간 총 16회)</div>
+      <div class="li">🍜 식당 주문·길 찾기 실전 회화 100문장 마스터</div>
+      <div class="note">✈️ 현지 탐방 여행: 8주 수료 후 후쿠오카 3박4일 탐방은 희망자에 한해 별도 신청/결제됩니다.</div>
+      <div class="row"><div><p class="muted">8주 정규 수강료 (교재 포함)</p><span class="price">380,000</span> 원</div><a class="btn sm" href="#detail">상세보기 ›</a></div>
+    </div>
+  </div>
+
+  <div class="card course">
+    <div class="img" style="background-image:url(img/course2.png)"><div class="badges"><span>왕초보 환영</span><span>악기 무상 대여</span></div><span class="loc">📍 종로 낙원 캠퍼스</span></div>
+    <div class="body">
+      <p class="muted">음악 & 공연무대 · 월·수 주 2회 / 총 16회 수업</p>
+      <h3 style="margin:.4rem 0">우쿨렐레 8주 (주 2회) 클래스<br>& 동네 축제 버스킹 무대</h3>
+      <div class="li">📅 월·수 오후 2:00~3:30 (주 2회, 8주간 총 16회)</div>
+      <div class="li">🎵 악기 없어도 무료 대여 지원 + 기초 코드 집중 완주</div>
+      <div class="note">🎤 축제 무대: 종강 주말 '인사동 쌈지길 축제' 버스킹 무대 전원 데뷔!</div>
+      <div class="row"><div><p class="muted">우쿨렐레 8주 (주 2회) 수강료</p><span class="price">280,000</span> 원</div><a class="btn sm" href="#detail">신청하기 ›</a></div>
+    </div>
+  </div>
+
+  <div class="card course">
+    <div class="img" style="background-image:url(img/course3.png)"><div class="badges"><span>화구 키트 증정</span></div><span class="loc">📍 서초 아틀리에</span></div>
+    <div class="body">
+      <p class="muted">미술 & 스케치 · 화목 주 2회 / 총 16회 수업</p>
+      <h3 style="margin:.4rem 0">어반스케치 8주 (주 2회) 기초<br>& 남해 바다 드로잉</h3>
+      <div class="li">📅 화·목 오후 1:30~3:00 (주 2회, 8주간 총 16회)</div>
+      <div class="li">🖊️ 펜 드로잉 & 수채화 채색 기초 1:1 맞춤 지도</div>
+      <div class="note">🏝️ 현지 스케치 여행: 종강 후 남해 다랭이마을 2박 3일 힐링 캠프 희망자 별도 신청</div>
+      <div class="row"><div><p class="muted">어반스케치 8주 (주 2회) 기본 수강료</p><span class="price">320,000</span> 원</div><a class="btn sm" href="#detail">상세보기 ›</a></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="muted blue">청춘학기 안심 보장 시스템</p>
+    <h2>혼자라도 걱정 없는 4가지 약속</h2>
+    <div class="promise"><div class="ic">👥</div><div><b>동년배 또래 짝꿍 매칭</b><p class="muted">혼자 오셔도 취향과 연령대가 맞는 따뜻한 짝꿍을 맺어드려요.</p></div></div>
+    <div class="promise"><div class="ic">🛡️</div><div><b>전담 안심 매니저 동행 케어</b><p class="muted">수업부터 여행까지 안전 케어 매니저가 곁에서 꼼꼼히 챙깁니다.</p></div></div>
+    <div class="promise"><div class="ic">😊</div><div><b>초보자 눈높이 맞춤 수업</b><p class="muted">진도를 서두르지 않고 누구나 즐겁게 완주할 수 있도록 이끌어 드립니다.</p></div></div>
+    <div class="promise"><div class="ic" style="background:#f97316">🎁</div><div><b>자녀 대리 결제 & 선물하기</b><p class="muted">자녀 카드로 대신 결제하고 부모님께는 수업 알림 창만 전달 가능합니다.</p></div></div>
+  </div>
+  <div class="card" style="text-align:center">
+    <b>전화 한 통이면 수업 접수부터 안내까지 끝!</b>
+    <a class="btn" style="margin:.8rem 0" href="tel:15887720">📞 1588-7720 친절 전화 상담 연결</a>
+    <p class="muted">운영시간: 평일 09:00 ~ 18:00 (시니어 전문 전담 상담원 대기 중)</p>
+  </div>
+</section>
+
+<!-- ========== 2. 프로그램 상세 ========== -->
+<section data-page="detail">
+  <div class="top">
+    <a href="#home" style="font-size:1.4rem">←</a><h1>프로그램 상세</h1>
+    <div class="fs"><button data-fs="1">ᴛT 가 크게</button></div>
+    <a class="call" href="tel:15887720">📞</a>
+  </div>
+  <div class="img" style="border-radius:0;aspect-ratio:780/576;background-image:url(img/hero.png)"><div class="badges"><span style="background:#0008">서울 서초 오프라인</span></div><span style="font-size:.9rem;color:#fff">⭐ 4.95 (동문 후기 56개)</span></div>
+  <div class="pad" style="background:#fff">
+    <span class="tag">어학 & 문화</span> <span class="tag" style="background:#f1f3f6;color:#555">주 2회 (화/목)</span> <span class="tag org">소수정예 10명</span>
+    <h2 style="font-size:1.35rem;margin-top:.7rem">기초 일본어 8주 마스터 (주 2회)<br>& 후쿠오카 미식 탐방 옵션</h2>
+    <p class="muted">히라가나 왕초보도 8주면 주문부터 길찾기까지 완벽 마스터! 동기들과 함께 배우고, 원하면 후쿠오카 현지로 떠나는 맞춤형 시니어 프로젝트.</p>
+    <div class="step row" style="justify-content:flex-start">🎓 <span><span class="muted">전담 멘토진 직강</span><br><b>사토 미호 (원어민 강사) · 김진우 (여행작가)</b></span></div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="row"><h2>💳 참가 비용 및 선택 옵션</h2><span class="muted blue">합리적인 2단계 선택제</span></div>
+    <div class="step main">
+      <div class="row"><span class="tag" style="background:#2f7cf6;color:#fff">1단계 · 필수 기본 수강</span><span class="muted">오프라인 정규 과정</span></div>
+      <div class="row" style="margin-top:.6rem"><div><b>8주 정규 프로그램비</b><p class="muted">주 2회, 총 16회 오프라인 수업</p></div><span class="price blue">380,000 <small>원</small></span></div>
+      <div class="li">✅ 총 16회 오프라인 실전 강의 (주 2회, 8주 완성)</div>
+      <div class="li">✅ 시니어 맞춤 큰 글씨 교재 및 휴대용 회화 단어장 제공</div>
+      <div class="li">✅ 청춘학기 전용 웰컴키트 (필기도구, 에코백, 복습 음원 USB)</div>
+    </div>
+    <div class="step">
+      <div class="row"><span class="tag" style="background:#334155;color:#fff">2단계 · 자유 선택 옵션</span><span class="muted" style="color:#f97316">6주차에 결정 가능</span></div>
+      <div class="row" style="margin-top:.6rem"><b>✈️ 3박 4일 후쿠오카 실전 졸업 여행</b><b>1,180,000 원</b></div>
+      <p class="muted">별도 선택 결제 (수강생 전용 할인가)</p>
+      <div class="note" style="background:#fff7ed;color:#9a3412">💡 부담 없이 시작하세요! 프로그램(주 2회 수업)을 먼저 수강하시고, 6주차에 동기들과 상의하여 현지 여행 참여 여부를 자유롭게 결정 및 추가 결제하실 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📅 수업 일정 및 운영 안내</h2>
+    <div class="promise"><span>🕑</span><div><p class="muted">수업 요일 및 시간</p><b>주 2회 (화요일 · 목요일 오후 2:00 ~ 4:00)</b><p class="muted">총 8주간 총 16회차 (회당 120분 집중 진행)</p></div></div>
+    <div class="promise"><span>📍</span><div><p class="muted">수업 장소</p><b>청춘 배움터 서초 캠퍼스</b><p class="muted">지하철 3호선·신분당선 양재역 2번 출구 도보 3분 (무료 주차)</p></div></div>
+    <div class="promise"><span>👥</span><div style="flex:1"><div class="row"><span class="muted">모집 정원</span><span class="tag red">마감 임박 (잔여 3석)</span></div><b>소수정예 10명 한정</b><div class="bar"><i style="width:70%"></i></div><p class="muted">7명 등록 완료 / 선착순 3명 모집 시 마감</p></div></div>
+  </div>
+
+  <div class="card">
+    <div class="row"><h2>📖 커리큘럼 (8주 총 16회차)</h2><span class="muted">왕초보 맞춤 교재 포함</span></div>
+    <div class="step"><div class="row"><span class="tag">1~4주차 (1~8회차)</span><span class="muted">발음 & 기초 표현</span></div>
+      <b style="display:block;margin:.5rem 0">"부담 없는 히라가나 & 일본 식당·카페에서 당당하게 주문하기"</b>
+      <div class="li">· 눈에 쏙 들어오는 큰 글씨 히라가나와 친절한 한글 발음 표기</div>
+      <div class="li">· 이자카야, 라멘, 스시 메뉴판 읽기와 토핑/음료 주문 연습</div>
+      <div class="li">· "스미마센(저기요)", "고레 쿠다사이(이것 주세요)" 필수 패턴 정복</div></div>
+    <div class="step"><div class="row"><span class="tag">5~8주차 (9~16회차)</span><span class="muted">실전 롤플레잉 & 계산</span></div>
+      <b style="display:block;margin:.5rem 0">"길 묻기, 편의점 결제, 엔화 동전 쓰기 & 여행 시 롤플레잉"</b>
+      <div class="li">· 지하철 표 사기, 화장실 위치 묻기 등 필수 여행 상황극</div>
+      <div class="li">· 헷갈리는 엔화 동전과 지폐 정확하게 계산하는 실전 훈련</div>
+      <div class="li">· (6주차 세미나) 후쿠오카 졸업 여행 설명회 및 참여자 최종확정</div></div>
+    <div class="note">✨ 수료 후 선택 가능 후쿠오카 텐진 & 나카스 강변<br><b>배운 일본어로 직접 주문하는 3박 4일 미식 탐방여행</b><br>전용 리무진 버스, 4성급 온천 호텔, 전용 투어 인솔자 24시간 안전 동행. 동기들과 뜻깊은 졸업 축하 여행을 만끽하세요!</div>
+  </div>
+
+  <div class="card">
+    <h2>📍 오프라인 강의실 위치</h2>
+    <p class="muted">서울 서초구 남부순환로 (양재역 2번 출구 앞)</p>
+    <iframe style="width:100%;height:10rem;border:0;border-radius:.8rem;margin-top:.6rem" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=127.028,37.481,127.040,37.488&amp;layer=mapnik&amp;marker=37.4846,127.0342"></iframe>
+    <p class="muted" style="margin-top:.5rem">🚇 양재역 도보 3분 · 엘리베이터 완비 · 전용 주차 무료</p>
+  </div>
+
+  <div class="card">
+    <div class="row"><h2>⭐ 먼저 경험한 선배 동문 후기</h2><a class="muted blue">후기 전체보기 ›</a></div>
+    <div class="step"><div class="row"><b>박순자 님 (68세 · 2기 수료)</b><span style="color:#f59e0b">★★★★★</span></div><span class="tag org">후쿠오카 여행 참가</span>
+      <p class="muted" style="margin-top:.4rem">"처음엔 60대 후반에 일본어를 배울 수 있을까 망설였는데 교재 글씨가 크고 선생님이 차근차근 반복해주셔서 정말 신났어요. 텐진 포장마차에서 제 입으로 직접 따뜻한 오뎅을 주문했던 순간은 평생 잊지 못할 추억입니다!"</p></div>
+    <div class="step"><div class="row"><b>이종환 님 (71세 · 2기 수료)</b><span style="color:#f59e0b">★★★★★</span></div><span class="tag">8주 수업만 이수</span>
+      <p class="muted" style="margin-top:.4rem">"일정이 맞지 않아 현지 여행은 가지 않고 수업만 들었는데도 대만족입니다. 같은 나이대 또래들과 화/목요일마다 모여 웃고 떠들며 뇌 운동도 제대로 했습니다. 강력 추천합니다."</p></div>
+  </div>
+  <div class="pad"><button class="btn yellow" style="width:100%">💬 가족·친구에게 일정 및 안내서 카카오톡 공유</button></div>
+
+  <div class="fixbar">
+    <a href="tel:15887720" style="text-align:center;font-size:.75rem;flex:none;padding:0 .4rem">📞<br>전화상담</a>
+    <a class="btn" href="#checkout">프로그램 수강 신청 380,000원 →</a>
+  </div>
+</section>
+
+<!-- ========== 3. 수강 신청 및 결제 ========== -->
+<section data-page="checkout">
+  <div class="top">
+    <a href="#detail" style="font-size:1.4rem">←</a><h1>수강 신청 및 결제</h1>
+    <div class="fs"><button data-fs="-1">가-</button><button data-fs="1" class="blue">가+</button></div>
+    <a class="call" href="tel:15887720">📞</a>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="row muted"><b class="blue">① 수강 및 정보확인</b>›<span>② 간편 결제</span>›<span>③ 신청 완료</span></div>
+    <div class="bar"><i style="width:35%"></i></div>
+  </div>
+  <div class="card">
+    <div class="row" style="justify-content:flex-start"><img src="img/course1.png" style="width:4rem;height:4rem;border-radius:.6rem;object-fit:cover" alt="">
+      <div><span class="tag">시니어 정규 강좌</span> <span class="muted">소수 정예반</span><br><b>기초 일본어 8주 과정</b><p class="muted">주 2회 (화·목) · 총 16회 정규 수업</p></div></div>
+    <div class="step main row"><span>● <b>정규 프로그램 수강료</b> <span class="blue">(기본 필수)</span><br><span class="muted">교재 및 음성 학습 펜 무료 포함</span></span><b>380,000원</b></div>
+    <label class="opt" style="align-items:flex-start"><input type="checkbox" id="trip" style="width:1.3rem;height:1.3rem;margin-top:.2rem">
+      <span><b>[선택] 후쿠오카 3박 4일 실전 졸업여행</b><br><b class="blue">+1,180,000원</b><br><span class="muted">사전 예약 시 항공·호텔 우선 확보<br>(미선택 시 추후 수료 6주차에 별도 결제 가능)</span></span></label>
+    <div class="note">ⓘ <b>여행 안내:</b> 현지 탐방 여행은 수업 진행 후 희망자에 한해 별도로 추가 결제 진행됩니다. 지금은 수강료만 결제하셔도 수업 참여가 가능합니다.</div>
+    <div class="row" style="border-top:1px solid #eee;padding-top:.8rem"><b>현재 결제 예정 금액</b><span class="price blue total">380,000원</span></div>
+  </div>
+
+  <div class="pad"><b>👤 신청하시는 분을 선택해 주세요</b></div>
+  <div class="who">
+    <label><input type="radio" name="who" checked><div style="font-size:1.6rem">🙋</div><b>내가 직접 참여해요</b><p class="muted">본인 명의로 간편 등록</p></label>
+    <label><input type="radio" name="who"><div style="font-size:1.6rem">🎁</div><b>부모님/가족에게 선물해요</b><p class="muted">선물 받으실 분 정보 입력</p></label>
+  </div>
+
+  <div class="pad row"><b>📋 참가자 기본 정보 입력</b><span class="tag">실명 확인 완료</span></div>
+  <div class="card"><p class="muted">성명 (한글 실명)</p><input type="text" value="김영숙"></div>
+  <div class="card"><p class="muted">휴대폰 번호 (알림톡 수신)</p><input type="text" value="010-1234-1234"><p class="muted" style="margin-top:.5rem">💬 수업 링크 및 입학 안내서가 카카오톡으로 전송됩니다</p></div>
+  <div class="card"><p class="muted">생년월일 8자리 <span class="blue">수강 등록 및 여행자 보험 가입용</span></p><input type="text" value="1958.04.15"></div>
+  <div class="card"><div class="row"><p class="muted">웰컴 학습 키트 수령 주소</p><button class="tag">주소 검색</button></div>
+    <input type="text" value="서울특별시 서초구 반포대로 12길 34" style="margin:.5rem 0"><input type="text" value="102동 1403호">
+    <p class="muted" style="margin-top:.5rem">🚚 교재 및 발음 펜 무료 안심 택배 발송 (개강 3일 전 도착)</p></div>
+
+  <div class="pad row"><b>💳 간편 결제 수단 선택</b><span class="muted">원클릭 안심결제</span></div>
+  <div style="margin:0 1rem">
+    <label class="opt"><input type="radio" name="pay" checked><span style="flex:1"><b>카카오페이 / 네이버페이</b> <span class="tag" style="background:#fde047;color:#000">간편</span> <span class="tag" style="background:#22c55e;color:#fff">NPay</span><br><span class="muted">지문 또는 비밀번호로 간편하게 결제</span></span></label>
+    <label class="opt"><input type="radio" name="pay"><span style="flex:1"><b>신용·체크카드 무이자 할부</b> <span class="tag">최대 12개월</span><br><span class="muted">모든 국내 카드 무이자 할부 혜택</span></span></label>
+    <label class="opt"><input type="radio" name="pay"><span style="flex:1"><b>가상계좌 / 무통장 입금</b> <span class="tag" style="background:#f1f3f6;color:#555">안심</span><br><span class="muted">전용 계좌번호를 문자로 즉시 전송</span></span></label>
+  </div>
+  <div class="card row" style="background:#eef4ff;margin-top:.6rem"><span>🎧 <b>전화 상담 결제 도우미</b> <span class="blue">어르신 전용</span><br><span class="muted">전문 상담사가 전화로 직접 신청을 도와 드립니다</span></span><a class="btn sm" href="tel:15887720">전화하기</a></div>
+  <label class="card opt" style="margin:0 1rem 1rem"><input type="checkbox" checked><span><b>🔔 자녀 안심 동시 알림 서비스 (무료)</b><br><span class="muted">수강 등록 내역과 강의 일정 안내를 보호자(자녀) 카카오톡으로 함께 전송해 드립니다.</span></span></label>
+  <div class="pad muted">🛡️ <b style="color:#1b1f27">100% 소비자 피해 보상 및 안심 에스크로 등록</b><br>개강 전까지 전액 100% 환불이 보장됩니다.</div>
+  <div class="card">
+    <div class="row"><span class="muted">총 신청 수강 인원</span><b>1명</b></div>
+    <div class="row" style="margin-top:.6rem"><b>최종 결제 금액</b><span class="price blue total">380,000원</span></div>
+    <p class="muted" style="text-align:center;margin-top:1rem">결제 후 개강 3일 전까지 100% 무료 취소 및 전액 환불 가능</p>
+  </div>
+  <div class="fixbar"><a class="btn" href="#my" id="paybtn"><span class="total">380,000원</span> 결제하기</a></div>
+</section>
+
+<!-- ========== 4. 내 학기 ========== -->
+<section data-page="my">
+  <div class="top">
+    <a class="logo" href="#home"><img src="img/logo.png" alt="청춘학기"></a>
+    <div class="fs"><button data-fs="-1">가-</button><span class="fsv">100%</span><button data-fs="1">가+</button></div>
+    <a class="call" href="tel:15880000">📞</a>
+  </div>
+  <div class="card row" style="margin-top:1rem"><span>🔊 큰 글씨와 음성으로 오늘 학기 일정듣기</span>›</div>
+  <div class="card">
+    <div class="row"><span class="tag" style="background:#2f7cf6;color:#fff">열정적인 배움 3주차 (주 2회)</span><span class="muted">2024년 10월</span></div>
+    <h2 style="margin-top:.6rem">김영숙 님의 청춘학기 라이프 ✨</h2>
+    <div class="step" style="background:#f5f7fa;border:0"><span class="muted">🈳 참여 중:</span><br><b class="blue">기초 일본어 8주반 (화·목 주 2회)</b></div>
+  </div>
+  <div class="card">
+    <div class="row"><span class="muted"><span class="blue">화요일·목요일 주 2회</span> 오후 14:00~16:00</span><span class="tag" style="background:#2f7cf6;color:#fff">진행중</span></div>
+    <h2 style="margin-top:.4rem">기초 일본어 8주반 (주 2회)</h2>
+    <div class="row"><b>진도율 <span class="blue">38%</span></b><span class="muted">총 16회차 중 6회차 진행 예정</span></div>
+    <div class="bar"><i style="width:38%"></i></div>
+    <div class="row muted" style="font-size:.75rem"><span>개강 1회차</span><span class="blue">현재 3주차 (6강 예정)</span><span>16회차 종강</span></div>
+    <div class="step" style="background:#f5f7fa;border:0"><b class="blue">사토 멘토 & 담임의 한마디</b><p>"영숙 님, 화요일 식당 주문 회화 너무 훌륭하셨어요! 이번 목요일 (6강) 길찾기 표현도 현지 여행에서 바로 쓰실 수 있습니다."</p></div>
+  </div>
+  <div class="card" style="background:#eef4ff">
+    <div class="row"><b>✈️ 나의 실전 탐방 여행 준비 상태</b><span class="tag" style="background:#fff">선택옵션</span></div>
+    <h3 style="margin-top:.5rem">후쿠오카 3박 4일 탐방 여행</h3>
+    <p class="muted">현재 6주차 여행 사전 설명회 D-12 / 우리 동기반 8명 신청 중!</p>
+    <div class="step row" style="background:#fff"><span>🏮 현지 시장체험 & 일본어 미션 실습</span><span class="tag" style="background:#fde047;color:#000">예약확정</span></div>
+    <a class="btn" href="#detail">여행 상세 및 추가 신청하기 ›</a>
+  </div>
+  <div class="card">
+    <div class="row"><h2>● 이번 주 다가오는 일정</h2><span class="tag">화·목 주 2회</span></div>
+    <div class="step row" style="justify-content:flex-start"><div class="btn" style="flex-direction:column;gap:0;padding:.4rem .8rem"><small>10월</small><b style="font-size:1.4rem">17</b></div>
+      <div style="flex:1"><div class="row"><b>10월 17일(목) 제6강</b><span class="tag">D-3</span></div><span class="blue">오후 14:00 ~ 16:00 (2시간)</span></div></div>
+    <div class="step">📍 서초 청춘배움터 3층 302호</div>
+    <div class="row"><button class="btn ghost" style="flex:1">➤ 지도 길찾기</button><button class="btn ghost" style="flex:1">👋 동기들에게 인사</button></div>
+    <button class="btn ghost" style="width:100%;margin-top:.6rem">📆 결석 또는 일정 변경 신청</button>
+  </div>
+  <div class="card">
+    <div class="row"><h2>📅 10월 배움 달력</h2><span class="tag">화·목 주 2회 수업</span></div>
+    <div class="cal" id="cal"></div>
+    <div class="step" style="background:#f5f7fa;border:0">
+      <b class="blue">10월 17일 (목) 14:00~16:00</b> <span class="tag" style="background:#2f7cf6;color:#fff">화목 6회차</span>
+      <p>📍 서초 청춘배움터 302호 (제6강 길 찾기 회화)</p>
+      <p>🎒 준비물: <b style="color:#f97316">교재 6과, 후쿠오카 지하철 노선도</b></p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="row"><h2>👥 동기방 & 탐방여행<br>준비 앨범</h2><a class="muted blue">전체보기 ›</a></div>
+    <div class="step"><b>일본어 2기 & 후쿠오카 원정대</b><br><span class="tag">8명 참여 중</span><p class="muted">어제 오후 "후쿠오카 라멘 맛집 지도" 공유됨</p><button class="btn" style="width:100%;margin-top:.5rem">대화방</button></div>
+    <div class="album"><div><div class="g2" style="background:url(img/album1.jpg) center/cover"></div>5강 단어 복습 숙제</div><div><div class="g4" style="background:url(img/album2.jpg) center/cover"></div>후쿠오카 코스 짜기</div><div><div class="g1" style="background:url(img/album3.jpg) center/cover"></div>길찾기 회화 꿀팁</div></div>
+  </div>
+  <div class="card"><div class="row"><b>모임 장소 오시는 길</b><span class="muted blue">양재역 2번 출구 250m</span></div><div class="step">📍 서초 청춘배움터 3층 302호</div></div>
+  <div class="card">
+    <h3>🎧 청춘학기 전담 매니저 상담</h3>
+    <p class="muted">화·목 일정 변경이나 후쿠오카 탐방 여행 문의는 언제든 편하게 전화주세요!</p>
+    <a class="btn" style="margin-top:.8rem" href="tel:15880000">📞 1588-0000 바로 전화 상담</a>
+  </div>
+</section>
+
+<nav class="nav" id="nav">
+  <a href="#home" data-tab="home"><b>🏠</b>홈</a>
+  <a href="#detail" data-tab="detail"><b>📖</b>프로그램</a>
+  <a href="#my" data-tab="my"><b>📅</b>내 학기</a>
+  <a href="#my" data-tab="me"><b>👤</b>마이</a>
+</nav>
+</div>
+
+<script>
+// 해시 라우팅: #home / #detail / #checkout / #my
+function show(){
+  const p = location.hash.slice(1) || 'home';
+  document.querySelectorAll('[data-page]').forEach(s => s.classList.toggle('on', s.dataset.page === p));
+  document.querySelectorAll('[data-tab]').forEach(a => a.classList.toggle('on', a.dataset.tab === p));
+  document.getElementById('nav').style.display = (p === 'detail' || p === 'checkout') ? 'none' : 'flex';
+  scrollTo(0, 0);
+}
+addEventListener('hashchange', show); show();
+
+// 글자 크기 조절
+let fs = 100;
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-fs]'); if (!b) return;
+  fs = Math.min(140, Math.max(80, fs + b.dataset.fs * 10));
+  document.documentElement.style.fontSize = 16 * fs / 100 + 'px';
+  document.querySelectorAll('.fsv').forEach(s => s.textContent = fs + '%');
+});
+
+// 여행 옵션 선택 시 금액 갱신
+document.getElementById('trip').onchange = e => {
+  const t = (380000 + (e.target.checked ? 1180000 : 0)).toLocaleString() + '원';
+  document.querySelectorAll('.total').forEach(s => s.textContent = t);
+};
+document.getElementById('paybtn').onclick = () => alert('신청이 완료되었습니다! 내 학기 화면으로 이동합니다.');
+
+// 2024년 10월 달력 (10/1 = 화요일)
+const cal = document.getElementById('cal');
+let h = '일월화수목금토'.split('').map((d, i) => `<span class="h ${i ? '' : 'sun'}">${d}</span>`).join('');
+const days = [29, 30, ...Array.from({length: 31}, (_, i) => i + 1), 1, 2];
+days.forEach((d, i) => {
+  const out = i < 2 || i > 32, dow = i % 7;
+  const cls = out ? 'x' : d === 17 ? 't' : (dow === 2 || dow === 4) ? 'c' : dow === 0 ? 'sun' : '';
+  h += `<span class="${cls}">${d}</span>`;
+});
+cal.innerHTML = h;
+</script>
+</body>
+</html>
